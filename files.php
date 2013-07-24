@@ -247,6 +247,8 @@ if ($state == 0) {
 <html>
 <head>
 	<title>Files - Acient Download System</title>
+	<head profile="http://www.w3.org/2005/10/profile">
+	<link rel="icon" type="image/png" href="favicon.png" />
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<meta charset='utf-8'> 
 </head>

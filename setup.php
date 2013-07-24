@@ -87,6 +87,8 @@ if (isset($_GET['forgot_password']) && !isset($_GET['hash'])) {
 	<html>
 	<head>
 	<meta charset="utf-8"> 
+	<head profile="http://www.w3.org/2005/10/profile">
+	<link rel="icon" type="image/png" href="favicon.png" />
 	<title>Setup - Acient Download System</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
@@ -118,6 +120,8 @@ if (isset($_GET['forgot_password']) && isset($_GET['hash'])) {
 		<html>
 		<head>
 		<meta charset="utf-8"> 
+		<head profile="http://www.w3.org/2005/10/profile">
+		<link rel="icon" type="image/png" href="favicon.png" />
 		<title>Setup - Acient Download System</title>
 		<link rel="stylesheet" type="text/css" href="style.css">
 		</head>
@@ -695,6 +699,8 @@ if ($state != 1 && $state != 2 && $state != 3 && $state != 4 && $state != 5) {
 <html>
 <head>
 	<title>Setup - Acient Download System</title>
+	<head profile="http://www.w3.org/2005/10/profile">
+	<link rel="icon" type="image/png" href="favicon.png" />
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<meta charset='utf-8'> 
 </head>
