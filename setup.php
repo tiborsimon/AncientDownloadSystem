@@ -1,31 +1,86 @@
 <?php
 
-/* ************************************************************************ *
- *																		   	*
- *  *
- *																			*
- *  Feltöltött fájl adatai:													*
- * 		• id 																*
- *		• név																*
- * 		• feltöltés dátuma													*
- *		• fájl pontos elérési útvonala										*
- *		• megosztási módszer (facebook, twitter vagy google+)				*
- * 		• visszaszámláló													*
- *																			*
- *	Fájl állapotai:															*
- *		• 0: van mentett állapot, jelszó bekérése							*
- *		• 1: nem volt mentett állapot, adatbázis elérhetőségei				*
- *		• 2: védő jelszó													*
- *		• 3: email cím megadása + jelzések									*
- *		• 4: megosztási beállítások: hol, mit, visszaszámlálás				*
- *		• 5: emlékezési rendszer beállítása 								*
- *		• 6: kész állapot - feltöltési link kiírása és küldése 				*
- *		• 7: jelszó bekérése után: új telepítés, vagy meglévő módosítása 	*
- *		• 8: módósító felület												*
- *		• 9: email reset 													*
- *		• 10: email reset kész 												*
- *																		   	*
- * ************************************************************************ */
+/*
+=============================================================================
+#  Ancient Download System - The Lightweight PHP Sharing System             #
+=============================================================================
+#  Copyright © 2013  Tibor Simon  <contact[_aT_]tibor-simon[_dOt_]com>      #
+#                                                                           #
+#  This program is free software; you can redistribute it and/or modify     #
+#  it under the terms of the GNU General Public License	Version 2 as        #
+#  published by the Free Software Foundation.                               #
+#                                                                           #
+#  This program is distributed in the hope that it will be useful, but      #
+#  WITHOUT ANY WARRANTY; without even the implied warranty of               #
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU        #
+#  General Public License for more details.                                 #
+#                                                                           #
+#  You should have received a copy of the GNU General Public License v2.0   #
+#  along with this program in the root directory; if not, write to the      #
+#  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,         #
+#  Boston, MA 02110-1301, USA.                                              #
+=============================================================================
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS  #
+#  OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF               #
+#  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.   #
+#  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY     #
+#  CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,     #
+#  TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE        #
+#  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                   #
+=============================================================================
+
+
+=============================================================================
+  S E T U P . P H P
+=============================================================================
+
+  This file is responsible for the installation of the system, it handles
+  the settings and the forgotten password system. It needs a MySQL database 
+  connection for its operations.
+
+  Requirements:
+  	Apache webserver .htaccess enabled with PHP 4 or above
+
+  Files and folders it will create during the installation:
+  	.htacces - to prevent unauthorized access to the sensitive files
+  	.nyilvantartas - custom session handling system's main registry file
+  	.adatbazisadatok.hozzaadas - for the database connection
+  	FILES/ - the folder contains all of the uploaded files
+
+  These file's names comes from hungarian words to give some hard time to the
+  bad people trying to hack the system.
+
+  The first time you run the file, it will look for the self generated files
+  listed above. If there are no such files yet, it will step into the 
+  installation process.
+
+  The state machine of the file:
+  	State 0: 
+  		Initial state. If there are self-made files, the system will promt 
+  		for your password.
+  	State 1:
+  		If there are no self-made files, the control will enter to this state
+  		and the installation process begins. The system will prompt for the 
+  		database connection informations.
+  	State 2:
+  		Installation process. Promt for the admin password.
+  	State 3:
+  		Installation process. Promt for the admin email.
+  	State 4:
+  		Not used yet. It reserves a state for the future implementations.
+	State 5:
+  		Not used yet. It reserves a state for the future implementations.
+  	State 6:
+  		Installation done. Showing the uploader's link.
+  	State 8:
+  		Settings interface. To change your password and email address.
+  	State 9:
+  		Reset password.
+  	State 10:
+  		Password reset done.
+
+=============================================================================
+*/
 
 include_once 'core/global.php';
 define(CURRENT_FILE, 'setup');

@@ -1,8 +1,57 @@
 <?php
 
+/*
+=============================================================================
+#  Ancient Download System - The Lightweight PHP Sharing System             #
+=============================================================================
+#  Copyright © 2013  Tibor Simon  <contact[_aT_]tibor-simon[_dOt_]com>      #
+#                                                                           #
+#  This program is free software; you can redistribute it and/or modify     #
+#  it under the terms of the GNU General Public License	Version 2 as        #
+#  published by the Free Software Foundation.                               #
+#                                                                           #
+#  This program is distributed in the hope that it will be useful, but      #
+#  WITHOUT ANY WARRANTY; without even the implied warranty of               #
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU        #
+#  General Public License for more details.                                 #
+#                                                                           #
+#  You should have received a copy of the GNU General Public License v2.0   #
+#  along with this program in the root directory; if not, write to the      #
+#  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,         #
+#  Boston, MA 02110-1301, USA.                                              #
+=============================================================================
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS  #
+#  OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF               #
+#  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.   #
+#  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY     #
+#  CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,     #
+#  TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE        #
+#  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                   #
+=============================================================================
+
+
+=============================================================================
+  G L O B A L . P H P
+=============================================================================
+
+  This file contains all of the shared functions for the system:
+
+  Constants
+  	VERSION
+  	SESSION_TIMEOUT
+  	SESSION_FILE
+
+  Functions
+  	getNow()
+  	getHeader($tite)
+  	getFooter()
+
+=============================================================================
+*/
+
+include_once ancient_session.php
+
 define(VERSION, '1.1');
-define(SESSION_TIMEOUT, 3*60);
-define(SESSION_FILE, '.nyilvantartas');
 
 // Aktuális időpontot adja vissza szép formában
 function getNow() {
@@ -27,70 +76,7 @@ function getFooter() {
 		</html>';
 }
 
-// Ha egy látogatónak nincs engedélye az oldal látogatására, akkor ez a függvény adhat neki.
-function createSession() {
-	$timeout = time()+SESSION_TIMEOUT;
-	$ip = md5(strrev($_SERVER['REMOTE_ADDR']));
-	$current = file_get_contents(SESSION_FILE);
-	// echo "Beolvasott fájl: <br />";
-	if ($current === false) {
-		$current = '';
-	}
 
-	if ($current === '') {
-		$current .= $ip.'$'.$timeout;
-	} else {
-		$current .= ':'.$ip.'$'.$timeout;
-	}
-	// var_dump($current); echo "<br />";
-	file_put_contents(SESSION_FILE, $current);
-}
-
-// Beléptetési rendszerfüggvény
-// Elenőrzi, hogy az adott IP című felhasználónak van-e joga folytatni a munkamenetét
-// Paraméterrel állítható, hogy az ellenőrzés sikeressége után frissítse-e a visszaszámlálóját
-// $refresh = false : csak ellenőrzés
-// $refresh = true : ellenőrzés majd frissítés, ha kell
-function validateSession($refresh) {
-	$ip = md5(strrev($_SERVER['REMOTE_ADDR']));
-	// Fájl tartalmának beolvasása
-	$str = file_get_contents(SESSION_FILE);
-	$arr = explode(':', $str);
-	$return_str = '';
-	$timed_out = true;
-	$found = false;
-	// Soronként ellenőrzés, keresünk azonos ip címet
-	$counter = 0;
-	foreach ($arr as $row) {
-		$r = explode('$', $row);
-
-		// Lejárat ellenőrzése: ha még nem járt le az idő
-		if (intval($r[1]) >= time()) {
-			// Ha pont a mi ip-nkhez tartozót fogtuk ki, akkor a frissítés függvényében tesszük be
-			if ($r[0] === $ip) {
-				$found = true;
-				$timed_out = false;
-				$timeout = ($refresh===true) ? time()+SESSION_TIMEOUT : intval($r[1]);
-				$ret = $ip.'$'.$timeout;
-				$return_str .= ($counter == 0)? $ret : ':'.$ret;
-				continue;
-			}
-			$return_str .= ($counter == 0)? $row : ':'.$row;
-		}
-		$counter++;
-	}
-	// Ha időtúllépés volt, töröljük a sort és visszaírjuk
-	if ($refresh === true || $timed_out === true) file_put_contents(SESSION_FILE, $return_str);
-
-	// Ha volt egyezés és nem járt le, akkor helyesel térünk vissza
-	return (!$timed_out && $found);
-}
-
-// Beléptetési rendszerfüggvény
-// A nyilvántartó fájl meglétét ellenőrzi
-function checkSession() {
-	return file_exists(SESSION_FILE);
-}
 
 // Rendszerre mutató URL lekérése
 function curPageURL() {

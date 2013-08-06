@@ -1,4 +1,58 @@
 <?php
+
+/*
+=============================================================================
+#  Ancient Download System - The Lightweight PHP Sharing System             #
+=============================================================================
+#  Copyright © 2013  Tibor Simon  <contact[_aT_]tibor-simon[_dOt_]com>      #
+#                                                                           #
+#  This program is free software; you can redistribute it and/or modify     #
+#  it under the terms of the GNU General Public License	Version 2 as        #
+#  published by the Free Software Foundation.                               #
+#                                                                           #
+#  This program is distributed in the hope that it will be useful, but      #
+#  WITHOUT ANY WARRANTY; without even the implied warranty of               #
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU        #
+#  General Public License for more details.                                 #
+#                                                                           #
+#  You should have received a copy of the GNU General Public License v2.0   #
+#  along with this program in the root directory; if not, write to the      #
+#  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,         #
+#  Boston, MA 02110-1301, USA.                                              #
+=============================================================================
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS  #
+#  OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF               #
+#  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.   #
+#  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY     #
+#  CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,     #
+#  TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE        #
+#  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                   #
+=============================================================================
+
+
+=============================================================================
+  S T A T S . P H P
+=============================================================================
+
+  This file is used for the statistics. It can plot two type of statistics:
+
+  Statstics based on downloads:
+  	It will list all of the downloads ordered by the download server time.
+
+  Statistics based on files:
+  	It will show how many times was each file downloaded.
+
+  The state machine of the file:
+  	State 0: 
+  		Initial authorizing state.
+  	State 1:
+  		List statstics based on downloads.
+  	State 2:
+  		List statstics based on files.
+  		
+=============================================================================
+*/
+
 include_once 'core/global.php';
 define(CURRENT_FILE, 'stats');
 

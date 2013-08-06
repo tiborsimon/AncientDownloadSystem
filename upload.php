@@ -1,42 +1,57 @@
 <?php
 
-/* ************************************************************************ *
- *																		   	*
- *  Első lépésként kapcsolódunk az  adatbázishoz és lekérdezzük, milyen     *
- *  a feltöltési módszer, mert ennek feltételeként kettéágazik a végre-     *
- *  hajtási szál. Egyik irány az FTP feltöltés, itt kiiratjuk, hogy ha      *
- *  még nem tette meg a fájlok feltöltését, akkor most tegye meg, mielőtt   *
- *  továbblépne. PHP feltöltésnél erre nincs szükség. A fájl feltöltése     *
- *  itt történik meg.													   	*
- *																		   	*
- *  Mindkét feltöltési módszernek tartalmaznia kell típusellenőrzést, ami   *
- *  hiba esetén megszakítja a folyamatot. Csak és kizárólag zip fájlok      *
- *  tölthetőek fel. Egységesség mindenek felelett.                          * 
- *																		   	*
- *  PHP feltöltésnek ezen kívül még tartalmaznia kell egy volt-e már ilyen  *
- *  vizsgálatot is. Ha volt, a feltöltési folyamat hibával megszakad.       *
- *																		   	*
- *  Ha minden stimmel, és PHP esetben a fájl helyére mozgatása is megtör-   *
- *  tént akkor elkezdődhet az egységes algoritmus, ami feltérképezi a FILES * 
- *  mappát, és ha olyan fájlt talál benne, ami még nem szerepel az adatbá-  *
- *  zisban, akkor megkezdi a betételi algoritmust.							*
- *																			*
- *  Feltöltött fájl adatai:													*
- * 		• id 																*
- *		• név																*
- * 		• feltöltés dátuma													*
- *		• fájl pontos elérési útvonala										*
- *		• megosztási módszer (facebook, twitter vagy google+)				*
- * 		• visszaszámláló													*
- *																			*
- *	Fájl állapotai:															*
- *		• 0: inicilizálási állapot 											*
- *		• 1: PHP feltöltési mód, feltöltési fázis							*
- *		• 2: FTP feltöltés, feltöltési fázis								*
- *		• 3: fájlok hiba nélkül feltöltve, jöhet az adatok feltöltésnek 	*
- *		• 4: minden adat feltöltve, linkek kiosztása						*
- *																		   	*
- * ************************************************************************ */
+/*
+=============================================================================
+#  Ancient Download System - The Lightweight PHP Sharing System             #
+=============================================================================
+#  Copyright © 2013  Tibor Simon  <contact[_aT_]tibor-simon[_dOt_]com>      #
+#                                                                           #
+#  This program is free software; you can redistribute it and/or modify     #
+#  it under the terms of the GNU General Public License	Version 2 as        #
+#  published by the Free Software Foundation.                               #
+#                                                                           #
+#  This program is distributed in the hope that it will be useful, but      #
+#  WITHOUT ANY WARRANTY; without even the implied warranty of               #
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU        #
+#  General Public License for more details.                                 #
+#                                                                           #
+#  You should have received a copy of the GNU General Public License v2.0   #
+#  along with this program in the root directory; if not, write to the      #
+#  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,         #
+#  Boston, MA 02110-1301, USA.                                              #
+=============================================================================
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS  #
+#  OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF               #
+#  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.   #
+#  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY     #
+#  CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,     #
+#  TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE        #
+#  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                   #
+=============================================================================
+
+
+=============================================================================
+  U P L O A D . P H P
+=============================================================================
+
+  In this file you can upload your files via browser or via FTP. You can
+  choose our upload method. After the file is uploaded you can give its
+  name and description, and you are ready to go.
+
+  The state machine of the file:
+  	State 0: 
+  		Initial authorizing state.
+  	State 1:
+  		Upload from browser.
+  	State 2:
+  		Upload via FTP.
+  	State 3:
+  		Upload done. File info form.
+  	State 4:
+  		Registration done. Link generation.
+  		
+=============================================================================
+*/
 
 include_once 'core/global.php';
 define(CURRENT_FILE, 'upload');
