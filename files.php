@@ -243,15 +243,9 @@ if ($state == 0) {
 }
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Files - Acient Download System</title>
-	<head profile="http://www.w3.org/2005/10/profile">
-	<link rel="icon" type="image/png" href="core/favicon.png" />
-	<link rel="stylesheet" type="text/css" href="core/style.css">
-	<meta charset='utf-8'> 
-</head>
+<?php 
+	getHeader("Files - Acient Download System");
+?>
 <body>
 	<?php 
 	if (validateSession(false)) {
@@ -402,6 +396,7 @@ if ($state == 0) {
 			?>
 		</div>
 	</div>
-	<div id="footer">Ancient Download System <?php echo VERSION; ?> - Copyright © <?php echo date("Y"); ?></div>
-</body>
-</html>
+<?php
+	getFooter();
+?>
+

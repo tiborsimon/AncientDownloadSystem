@@ -83,16 +83,8 @@ if (isset($_GET['forgot_password']) && !isset($_GET['hash'])) {
 
 	mail($to, $subject, $message, $headers);
 
-	echo '<!DOCTYPE html>
-	<html>
-	<head>
-	<meta charset="utf-8"> 
-	<head profile="http://www.w3.org/2005/10/profile">
-	<link rel="icon" type="image/png" href="core/favicon.png" />
-	<title>Setup - Acient Download System</title>
-	<link rel="stylesheet" type="text/css" href="core/style.css">
-	</head>
-	<body>
+	getHeader("Setup - Acient Download System");
+	echo '<body>
 	<div id="bg">&nbsp;</div>
 	<div id="wrapper">
 	<div id="content">
@@ -101,10 +93,8 @@ if (isset($_GET['forgot_password']) && !isset($_GET['hash'])) {
 	<div class="form-info">Resetting link sent to your email address.</div>
 	</fieldset>
 	</div>
-	</div>
-	<div id="footer">Ancient Download System '.VERSION. ' - Copyright © <?php echo date("Y"); ?></div>
-	</body>
-	</html>';
+	</div>';
+	getFooter();
 	exit();
 }
 if (isset($_GET['forgot_password']) && isset($_GET['hash'])) {
@@ -116,16 +106,8 @@ if (isset($_GET['forgot_password']) && isset($_GET['hash'])) {
 	if ($hash === $passRaw) {
 		$state = 9;
 	} else {
-		echo '<!DOCTYPE html>
-		<html>
-		<head>
-		<meta charset="utf-8"> 
-		<head profile="http://www.w3.org/2005/10/profile">
-		<link rel="icon" type="image/png" href="core/favicon.png" />
-		<title>Setup - Acient Download System</title>
-		<link rel="stylesheet" type="text/css" href="core/style.css">
-		</head>
-		<body>
+		getHeader("Setup - Acient Download System");
+		echo '<body>
 		<div id="bg">&nbsp;</div>
 		<div id="wrapper">
 		<div id="content">
@@ -135,8 +117,8 @@ if (isset($_GET['forgot_password']) && isset($_GET['hash'])) {
 		<div style="text-align:center;"><a href="'.$forgotten_password_link.'">Request a new one</a></div>
 		</fieldset>
 		</div>
-		</div>
-		<div id="footer">Ancient Download System '. VERSION .' - Copyright © <?php echo date("Y"); ?></div></body></html>';
+		</div>';
+		getFooter();
 		exit();
 	}
 }
@@ -227,13 +209,38 @@ if ($state == 0) {
 		// Kapcsolat létrejött.
 			// Kapcsolodasi adatok fájlba mentése
 			$handler = fopen('.adatbazisadatok.hozzaadas', 'w') or die("can't open file");
-			fwrite($handler, '<?php define(\'LOCATION\', \''.$dbLocation.'\');define(\'USERNAME\', \''.$dbUsername.'\');define(\'PSW\', \''.$dbPassword.'\');define(\'DB_NAME\', \''.$dbName.'\');define(TABLE_NAME_FILES, \'ancient_download_files\');define(TABLE_NAME_SETTINGS, \'ancient_download_settings\');define(TABLE_NAME_STATS, \'ancient_download_stats\');?>');
+			fwrite($handler, 
+				'<?php  define(\'LOCATION\', \''.$dbLocation.'\');
+						define(\'USERNAME\', \''.$dbUsername.'\');
+						define(\'PSW\', \''.$dbPassword.'\');
+						define(\'DB_NAME\', \''.$dbName.'\');
+						define(TABLE_NAME_FILES, \'ancient_download_files\');
+						define(TABLE_NAME_SETTINGS, \'ancient_download_settings\');
+						define(TABLE_NAME_STATS, \'ancient_download_stats\');?>'
+			);
 			fclose($handler);
 
 			// Listázás kikapcsolása és kapcsolódási fájlok védelme
 			$handler = fopen('.htaccess', 'w') or die("can't open file");
 			fwrite($handler, "Options All -Indexes\n");
-			fwrite($handler, "<files ".SESSION_FILE.">\norder allow,deny\ndeny from all\n</files>\n<files .adatbazisadatok.hozzaadas>\norder allow,deny\ndeny from all\n</files>\n<files .htaccess>\norder allow,deny\ndeny from all\n</files>\n\nOptions +FollowSymLinks\nRewriteEngine On\nRewriteRule ^([a-zA-Z0-9]+)$ /index.php?code=$1\nRewriteRule ^([a-zA-Z0-9]+)/$ /index.php?code=$1");
+			fwrite($handler, 
+				"<files ".SESSION_FILE.">\n
+				 	order allow,deny\n
+				 	deny from all\n
+				 </files>\n
+				 <files .adatbazisadatok.hozzaadas>\n
+				 	order allow,deny\n
+				 	deny from all\n
+				 </files>\n
+				 <files .htaccess>\n
+				 	order allow,deny\n
+				 	deny from all\n
+				 </files>\n\n
+				 Options +FollowSymLinks\n
+				 RewriteEngine On\n
+				 RewriteRule ^([a-zA-Z0-9]+)$ /index.php?code=$1\n
+				 RewriteRule ^([a-zA-Z0-9]+)/$ /index.php?code=$1"
+			);
 			fclose($handler);
 
 			// Kapcsolódási adatok hozzáadása
@@ -693,17 +700,10 @@ if ($state != 1 && $state != 2 && $state != 3 && $state != 4 && $state != 5) {
 
 // echo $state."<br />";
 
+// print the header
+getHeader("Setup - Acient Download System");
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Setup - Acient Download System</title>
-	<head profile="http://www.w3.org/2005/10/profile">
-	<link rel="icon" type="image/png" href="core/favicon.png" />
-	<link rel="stylesheet" type="text/css" href="core/style.css">
-	<meta charset='utf-8'> 
-</head>
 <body>
 	<?php 
 	if (validateSession(false) && !$no_navi) {
@@ -769,7 +769,7 @@ if ($state != 1 && $state != 2 && $state != 3 && $state != 4 && $state != 5) {
 						<p class="form-label">Email</p><input type="textfield" class="custom-input" name="email1" /><br />
 						<p class="form-label">Retype email</p><input type="textfield" class="custom-input" name="email2" /><br />
 						<div class="form-info">Do you want to get notifications about your downloads?</div>
-						<select name="notification">
+						<!--<select name="notification">
 							<option value="0">Do not send notification.</option>
 							<option value="1">Send notification after 1 download.</option>
 							<option value="5">Send notification after 5 downloads.</option>
@@ -783,7 +783,7 @@ if ($state != 1 && $state != 2 && $state != 3 && $state != 4 && $state != 5) {
 							<option value="2000">Send notification after 2000 downloads.</option>
 							<option value="5000">Send notification after 5000 downloads.</option>
 							<option value="10000">Send notification after 10000 downloads.</option>
-						</select><br />
+						</select><br />-->
 					</fieldset>
 					
 					<input type="submit" name="next" class="button" value="Next"><input type="submit" name="back" class="button" value="Back">
@@ -895,7 +895,7 @@ if ($state != 1 && $state != 2 && $state != 3 && $state != 4 && $state != 5) {
 						<p class="form-label">Email</p><input type="textfield" class="custom-input-edit" name="email1" value="<?php echo $edit_content['email']; ?>" />
 						<p class="form-label">Retype email</p><input type="textfield" class="custom-input-edit" name="email2" />
 						<div class="error"><?php echo $emailError; ?></div>
-						<p class="form-edit-info">Send notification email about downloads.</p>
+						<!--<p class="form-edit-info">Send notification email about downloads.</p>
 						<select name="notification">
 							<option value="0" <?php if($edit_content['notificationThreshold']==0){echo "selected";}?>>Do not send notification.</option>
 							<option value="1" <?php if($edit_content['notificationThreshold']==1){echo "selected";}?>>Send notification after 1 download.</option>
@@ -910,10 +910,11 @@ if ($state != 1 && $state != 2 && $state != 3 && $state != 4 && $state != 5) {
 							<option value="2000" <?php if($edit_content['notificationThreshold']==2000){echo "selected";}?>>Send notification after 2000 downloads.</option>
 							<option value="5000" <?php if($edit_content['notificationThreshold']==5000){echo "selected";}?>>Send notification after 5000 downloads.</option>
 							<option value="10000" <?php if($edit_content['notificationThreshold']==10000){echo "selected";}?>>Send notification after 10000 downloads.</option>
-						</select>
+						</select>-->
 					</fieldset>
 
-					<fieldset>
+
+					<!--<fieldset>
 						<legend>Sharing options</legend>
 						<input type="checkbox" name="share[]" value="facebook" <?php if($edit_content['sharingMethod']&4) echo "checked"; ?>><span class="form-info">Facebook</span><br />
 						<input type="checkbox" name="share[]" value="twitter" <?php if($edit_content['sharingMethod']&2) echo "checked"; ?>><span class="form-info">Twitter</span><br />
@@ -963,7 +964,7 @@ if ($state != 1 && $state != 2 && $state != 3 && $state != 4 && $state != 5) {
 							<option value="11m" <?php if($edit_content['cookieTimeout']==="11m"){echo "selected";}?>>11 months</option>
 							<option value="1y" <?php if($edit_content['cookieTimeout']==="1y"){echo "selected";}?>>1 year</option>
 						</select><br />
-					</fieldset>
+					</fieldset>-->
 
 
 					<input type="submit" name="save" class="button" value="Save">
@@ -1008,6 +1009,7 @@ if ($state != 1 && $state != 2 && $state != 3 && $state != 4 && $state != 5) {
 
 		</div>
 	</div>
-	<div id="footer">Ancient Download System <?php echo VERSION; ?> - Copyright © <?php echo date("Y"); ?></div>
-</body>
-</html>
+<?php
+	getFooter();
+?>
+

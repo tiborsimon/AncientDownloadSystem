@@ -1,12 +1,30 @@
 <?php
 
-define(VERSION, '1.0');
+define(VERSION, '1.1');
 define(SESSION_TIMEOUT, 3*60);
 define(SESSION_FILE, '.nyilvantartas');
 
 // Aktuális időpontot adja vissza szép formában
 function getNow() {
 	return date("Y-m-d H:i:s");
+}
+
+function getHeader($title) {
+	echo '<!DOCTYPE html>
+	<html>
+	<head>
+	<meta charset="utf-8"> 
+	<head profile="http://www.w3.org/2005/10/profile">
+	<link rel="icon" type="image/png" href="core/favicon.png" />
+	<title>' . $title . '</title>
+	<link rel="stylesheet" type="text/css" href="core/style.css">
+	</head>';
+}
+
+function getFooter() {
+	echo '<div id="footer">Ancient Download System ' . VERSION . ' - Copyright © ' . date("Y") .'</div>
+		</body>
+		</html>';
 }
 
 // Ha egy látogatónak nincs engedélye az oldal látogatására, akkor ez a függvény adhat neki.

@@ -57,15 +57,9 @@ if ($state == 0) {
 }
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Statistics - Acient Download System</title>
-	<head profile="http://www.w3.org/2005/10/profile">
-	<link rel="icon" type="image/png" href="core/favicon.png" />
-	<link rel="stylesheet" type="text/css" href="core/style.css">
-	<meta charset='utf-8'> 
-</head>
+<?php 
+	getHeader("Statistics - Acient Download System");
+?>
 
 <script type="text/javascript">
 var a="hello";
@@ -164,6 +158,7 @@ var a="hello";
 		</form>
 	</div>
 </div>
-<div id="footer">Ancient Download System <?php echo VERSION; ?> - Copyright © <?php echo date("Y"); ?></div>
-</body>
-</html>
+<?php
+	getFooter();
+?>
+
