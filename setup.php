@@ -27,7 +27,7 @@
  *																		   	*
  * ************************************************************************ */
 
-include_once 'global.php';
+include_once 'core/global.php';
 define(CURRENT_FILE, 'setup');
 
 // Nulladik állapotba kerülünk alapból. Ha létezik a konfigurációt
@@ -88,9 +88,9 @@ if (isset($_GET['forgot_password']) && !isset($_GET['hash'])) {
 	<head>
 	<meta charset="utf-8"> 
 	<head profile="http://www.w3.org/2005/10/profile">
-	<link rel="icon" type="image/png" href="favicon.png" />
+	<link rel="icon" type="image/png" href="core/favicon.png" />
 	<title>Setup - Acient Download System</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="core/style.css">
 	</head>
 	<body>
 	<div id="bg">&nbsp;</div>
@@ -121,9 +121,9 @@ if (isset($_GET['forgot_password']) && isset($_GET['hash'])) {
 		<head>
 		<meta charset="utf-8"> 
 		<head profile="http://www.w3.org/2005/10/profile">
-		<link rel="icon" type="image/png" href="favicon.png" />
+		<link rel="icon" type="image/png" href="core/favicon.png" />
 		<title>Setup - Acient Download System</title>
-		<link rel="stylesheet" type="text/css" href="style.css">
+		<link rel="stylesheet" type="text/css" href="core/style.css">
 		</head>
 		<body>
 		<div id="bg">&nbsp;</div>
@@ -700,8 +700,8 @@ if ($state != 1 && $state != 2 && $state != 3 && $state != 4 && $state != 5) {
 <head>
 	<title>Setup - Acient Download System</title>
 	<head profile="http://www.w3.org/2005/10/profile">
-	<link rel="icon" type="image/png" href="favicon.png" />
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="icon" type="image/png" href="core/favicon.png" />
+	<link rel="stylesheet" type="text/css" href="core/style.css">
 	<meta charset='utf-8'> 
 </head>
 <body>

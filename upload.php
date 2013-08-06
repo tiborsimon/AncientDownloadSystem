@@ -38,7 +38,7 @@
  *																		   	*
  * ************************************************************************ */
 
-include_once 'global.php';
+include_once 'core/global.php';
 define(CURRENT_FILE, 'upload');
 
 // Alapértelmezésben az állapot 0, majd az FTP és a PHP feltöltési mód választja szét
@@ -365,8 +365,8 @@ if ($state == 4) {
 <head>
 	<title>Upload - Acient Download System</title>
 	<head profile="http://www.w3.org/2005/10/profile">
-	<link rel="icon" type="image/png" href="favicon.png" />
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="icon" type="image/png" href="core/favicon.png" />
+	<link rel="stylesheet" type="text/css" href="core/style.css">
 	<meta charset='utf-8'> 
 </head>
 <body>
