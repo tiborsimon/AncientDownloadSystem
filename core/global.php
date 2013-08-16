@@ -49,7 +49,7 @@
 =============================================================================
 */
 
-include_once ancient_session.php
+include_once 'ancient_session.php';
 
 define(VERSION, '1.1');
 
