@@ -12,6 +12,9 @@ Ancient Download System is an easy to use lightweight PHP & MySQL based download
 * __Easy to use interface__
 * __Customizable logo and favicon__
 
+This project is using another project: <https://github.com/tiborsimon/AncientSession>
+
+
 
 ---
 
@@ -59,9 +62,7 @@ This is the only frontend file of the system. It expects one URL parameter that 
 ###setup.php
 This file is the first you should run on the server during installation. It installs the system on your server (creates the requierd files, folders, databse tables, security protection), handles the forgotten password issue, manages the settings of the system.
 
-setup.php will create additional files[^1] and folders
-
-[^1]: The name of the files are in hungarian for security reasons.
+setup.php will create additional files and folders. ( _the name of the files are in hungarian for security reasons_ )
 
 * __FILES__ folder - that contains all of your uploaded files. via FTP you should upload your files in that folder, otherwise, the system won't find them
 * __.htaccess__ - this file will protect the sensitive files the system have to have
