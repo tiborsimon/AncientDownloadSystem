@@ -139,7 +139,7 @@ if (isset($_GET['code'])) {
 			</form>
 		</div>
 	</div>
-	<div id="footer-frontend">Ancient Download System <?php echo VERSION; ?> - Copyright © <?php echo date("Y"); ?></div>
+	<div id="footer-frontend"><a href="http://tibor-simon.com/portfolio/ancient-download-system/" target="_blank" style="text-decoration: none;">Ancient Download System</a> <?php echo VERSION; ?> - Copyright © <?php echo date("Y"); ?></div>
 	<div class='social'>
 		<div class='social-container'>
 			<div class="fb-like" data-href="<?php echo curPageURL(); ?>" data-send="false" data-layout="button_count" data-width="100" data-show-faces="false"></div>
