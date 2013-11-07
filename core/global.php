@@ -71,7 +71,7 @@ function getHeader($title) {
 }
 
 function getFooter() {
-	echo '<div id="footer">Ancient Download System ' . VERSION . ' - Copyright © ' . date("Y") .'</div>
+	echo '<div id="footer"><a href="http://tibor-simon.com/portfolio/ancient-download-system/" target="_blank">Ancient Download System</a> ' . VERSION . ' - Copyright © ' . date("Y") .'</div>
 		</body>
 		</html>';
 }
